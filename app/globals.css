@@ -1,5 +1,60 @@
 @import "tailwindcss";
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+body {
+  width: 100%;
+  line-height: 1;
+}
+
+main {
+  margin-right: 1.5rem;
+  margin-left: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  height: 100%;
+}
+
+.whiteSection {
+  border: 1px solid black;
+}
+
+.topAddress {
+  @apply flex flex-col items-start justify-between mb-px;
+}
+
+.dateField {
+  margin: 2px;
+  text-align: center;
+  width: 4rem;
+}
+
+.borderGray {
+  border-color: #7f7f7f;
+}
+
+.line-1rem {
+  line-height: 1rem;
+}
+
+.inputTopAddress {
+  @apply border-b border-black;
+}
+.arial {
+  font-family: Arial, sans-serif;
+}
+
+.arialMT {
+  font-family: "Arial MT", Arial, sans-serif;
+}
 /*
 :root {
   --background: #ffffff;
