@@ -23,12 +23,36 @@ main {
   height: 100%;
 }
 
-.whiteSection {
-  border: 1px solid black;
-}
-
 .topAddress {
   @apply flex flex-col items-start justify-between mb-px;
+}
+
+.sectionHeader {
+  background-color: #cccccc;
+  font-family: Arial, sans-serif;
+  @apply text-xl font-bold px-3 w-full border-b;
+}
+
+.boldCheckbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-right: 0.3em;
+  border-style: solid;
+  border-color: black;
+  border-left-width: 3px;
+  border-right-width: 3px;
+  border-top-width: 4px;
+  border-bottom-width: 4px;
+  position: relative;
+  cursor: pointer;
+}
+
+.boldCheckbox:checked::after {
+  content: "\2714";
+  font-family: Arial, sans-serif;
+  position: absolute;
+  top: -10px;
 }
 
 .dateField {

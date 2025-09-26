@@ -20,6 +20,8 @@ type Signer =
   | "Member or manager of LLC Applicant"
   | "Agent for the Applicant";
 
+export const ASSESSMENT_YEAR = "2025/26";
+
 export interface DateObj {
   month: number | null;
   day: number | null;
@@ -42,7 +44,6 @@ interface MyMainState {
     borough: Borough | null;
     block: number | null;
     lot: number | null;
-    assessment_year: string; //TODO: switch to 2025/26
     full_address: string;
   };
   section_2: {
@@ -178,7 +179,6 @@ const initialState: MyMainState = {
     borough: null,
     block: null,
     lot: null,
-    assessment_year: "",
     full_address: "",
   },
   section_2: {
@@ -368,6 +368,24 @@ const mainSlice = createSlice({
         current = current[keys[i]];
       }
 
+      current[keys[keys.length - 1]] = action.payload.value.trim();
+    },
+    setBooleanField: (
+      state,
+      action: PayloadAction<{ path: string; value: boolean }>
+    ) => {
+      const keys = action.payload.path.split(".");
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let current: any = state;
+
+      for (let i = 0; i < keys.length - 1; i++) {
+        if (typeof current[keys[i]] !== "object" || current[keys[i]] === null) {
+          current[keys[i]] = {};
+        }
+        current = current[keys[i]];
+      }
+
       current[keys[keys.length - 1]] = action.payload.value;
     },
     /*setLoginState: (state, action: PayloadAction<boolean>) => {
@@ -385,6 +403,7 @@ const mainSlice = createSlice({
 export const {
   setData,
   setTextField,
+  setBooleanField,
   /*setLoginState, setUserEmail, setUserName*/
 } = mainSlice.actions;
 
