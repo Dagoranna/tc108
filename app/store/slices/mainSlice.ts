@@ -19,6 +19,7 @@ type Signer =
   | "General partner of Applicant"
   | "Member or manager of LLC Applicant"
   | "Agent for the Applicant";
+type RepresentativeType = "Attorney" | "Other";
 
 export const ASSESSMENT_YEAR = "2025/26";
 
@@ -55,11 +56,16 @@ interface MyMainState {
   section_3: {
     name: string;
     group: string;
-    phone: string; //TODO: add format "(123) 456-7890"
+    phone: {
+      phone_1: number | null;
+      phone_2: number | null;
+      phone_3: number | null;
+    };
     mail_addr: string;
     email_addr: string; //TODO add format mail
     isHandler: boolean;
-    representative_type: string;
+    representative_type: RepresentativeType | null;
+    representative_type_other: string;
   };
   section_4: {
     market_value: number | null;
@@ -190,11 +196,16 @@ const initialState: MyMainState = {
   section_3: {
     name: "",
     group: "",
-    phone: "",
+    phone: {
+      phone_1: null,
+      phone_2: null,
+      phone_3: null,
+    },
     mail_addr: "",
     email_addr: "",
     isHandler: false,
-    representative_type: "",
+    representative_type: null,
+    representative_type_other: "",
   },
   section_4: {
     market_value: null,
