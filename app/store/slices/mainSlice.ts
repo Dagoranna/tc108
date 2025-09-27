@@ -76,7 +76,7 @@ interface MyMainState {
   };
   section_6: {
     kitchens: number | null;
-    bath: number | null;
+    baths: number | null;
     bedrooms: number | null;
     other_rooms: number | null;
     stories: number | null;
@@ -89,6 +89,7 @@ interface MyMainState {
     property_descr: {
       property_is: PropertyType | null;
       other_info: {
+        descr: string;
         resid_units: number | null;
         commerc_units: number | null;
       };
@@ -216,7 +217,7 @@ const initialState: MyMainState = {
   },
   section_6: {
     kitchens: null,
-    bath: null,
+    baths: null,
     bedrooms: null,
     other_rooms: null,
     stories: null,
@@ -229,6 +230,7 @@ const initialState: MyMainState = {
     property_descr: {
       property_is: null,
       other_info: {
+        descr: "",
         resid_units: null,
         commerc_units: null,
       },

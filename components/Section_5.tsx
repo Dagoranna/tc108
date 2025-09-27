@@ -4,13 +4,6 @@ import type { RootState, AppDispatch } from "../app/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../app/store/slices/mainSlice";
 
-/*
-  section_5: {
-    hearing_req: HearingRequest | null;
-  };
-
-  type HearingRequest = "Without" | "In-person" | "Telephone" | "Video";
-*/
 export default function Section_5() {
   const dispatch: AppDispatch = useDispatch();
   const hearing_req = useSelector(
