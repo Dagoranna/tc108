@@ -10,7 +10,7 @@ input[type="number"] {
   appearance: textfield;
 }
 
-input[type="text"] {
+input[type="text"]:not(.dateField) {
   padding-left: 0.5rem;
 }
 
@@ -86,7 +86,6 @@ main {
 .dateField {
   margin: 2px;
   text-align: center;
-  width: 4rem;
 }
 
 .borderGray {

@@ -449,14 +449,3 @@ export default function Section_6() {
     </div>
   );
 }
-/*  type PropertyType =
-| "family_1"
-| "family_2"
-| "family_3"
-| "vacant"
-| "class_one_condo"
-| "other";*/
-
-/*
-If OTHER, enter number of residential units: ___ and number of commercial units: ___
-*/

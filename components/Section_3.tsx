@@ -140,7 +140,7 @@ export default function Section_3() {
       <LabeledField
         title="PHONE NO.:"
         additionalClass="border-b"
-        styleObj={{ flex: "0 1" }}
+        styleObj={{ flex: "1 1" }}
       >
         <div className="flex px-4">
           (

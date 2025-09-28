@@ -72,27 +72,30 @@ export default function DateField({ path }: { path: string }) {
   }, [selected, dispatch, path]);
 
   return (
-    <div>
+    <div className="flex align-end">
       <input
-        className="dateField"
+        className="dateField border-b border-black w-8"
         type="text"
         value={month}
+        placeholder="MM"
         onChange={(e) => changeHandle(e.target.value, 2, setMonth)}
         onBlur={(e) => addZero(e.target.value, 2, setMonth)}
       />
       /
       <input
-        className="dateField"
+        className="dateField border-b border-black w-8"
         type="text"
         value={day}
+        placeholder="DD"
         onChange={(e) => changeHandle(e.target.value, 2, setDay)}
         onBlur={(e) => addZero(e.target.value, 2, setDay)}
       />
       /
       <input
-        className="dateField"
+        className="dateField border-b border-black w-12"
         type="text"
         value={year}
+        placeholder="YYYY"
         onChange={(e) => changeHandle(e.target.value, 4, setYear)}
       />
       <button onClick={() => setOpen(!open)}>&#x1F4C5;</button>
