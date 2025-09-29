@@ -1,16 +1,13 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import type { RootState, AppDispatch } from "../app/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../app/store/slices/mainSlice";
 import { ASSESSMENT_YEAR as year } from "../app/store/slices/mainSlice";
-// import DateField from "../components/DateField";
-//import { PayloadAction } from "@reduxjs/toolkit";
-/*
-      <DateField path="section_9.sale_1.date" />
-      <DateField path="section_9.sale_2.date" />
-*/
+import ErrorField from "../components/ErrorField";
+import { handleError } from "../app/utils/mainUtils";
+
 export default function SectionIntro() {
   const dispatch: AppDispatch = useDispatch();
   const borough = useSelector(
@@ -34,6 +31,9 @@ export default function SectionIntro() {
     (state: RootState) =>
       state.main.section_received_notice.increased_assessment
   );
+
+  const [blockError, setBlockError] = useState(false);
+  const [lotError, setLotError] = useState(false);
 
   function handleCheckbox(e: React.ChangeEvent<HTMLInputElement>) {
     const checked = e.currentTarget.checked;
@@ -77,7 +77,7 @@ export default function SectionIntro() {
             onChange={(e) => handleInput(e)}
           />
         </div>
-        <div className="topAddress">
+        <div className="topAddress relative">
           <div>BLOCK</div>
           <input
             id="section_address.block"
@@ -85,9 +85,15 @@ export default function SectionIntro() {
             style={{ width: "5rem" }}
             value={block ? block : ""}
             onChange={(e) => handleInput(e)}
+            onBlur={(e) =>
+              setBlockError(handleError(e.target.value, /^\d{1,5}$/))
+            }
           />
+          {blockError && (
+            <ErrorField title="The field must contain 1-5 digits" />
+          )}
         </div>
-        <div className="topAddress">
+        <div className="topAddress relative">
           <div>LOT</div>
           <input
             id="section_address.lot"
@@ -95,7 +101,11 @@ export default function SectionIntro() {
             style={{ width: "4rem" }}
             value={lot ? lot : ""}
             onChange={(e) => handleInput(e)}
+            onBlur={(e) =>
+              setLotError(handleError(e.target.value, /^\d{1,4}$/))
+            }
           />
+          {lotError && <ErrorField title="The field must contain 1-4 digits" />}
         </div>
         <div className="topAddress">
           <div>GROUP #</div>

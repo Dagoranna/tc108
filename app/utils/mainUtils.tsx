@@ -1,6 +1,7 @@
 import type { MyMainState } from "../store/slices/mainSlice";
 import { loadState } from "../store/slices/mainSlice";
 import type { AppDispatch } from "../store/store";
+import * as actions from "../store/slices/mainSlice";
 
 export function downloadJson(data: MyMainState, filename = "tc108.json") {
   const jsonStr = JSON.stringify(data, null, 2);
@@ -38,4 +39,22 @@ export async function uploadJsonFileAndDispatch(
   }
 
   dispatch(loadState(parsed as MyMainState));
+}
+
+export function handleInput(
+  e: React.ChangeEvent<HTMLInputElement>,
+  dispatch: AppDispatch
+) {
+  const value = e.currentTarget.value;
+
+  dispatch(
+    actions.setTextField({
+      path: e.currentTarget.id,
+      value: value,
+    })
+  );
+}
+
+export function handleError(value: string, regex: RegExp) {
+  return !regex.test(value);
 }

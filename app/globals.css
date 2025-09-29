@@ -31,6 +31,20 @@ main {
   height: 100%;
 }
 
+.errorField {
+  position: absolute;
+  background-color: red;
+  text-align: center;
+  border-radius: 50%;
+  width: 1rem;
+  color: white;
+  font-weight: bold;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
 .button-14 {
   background-image: linear-gradient(#f7f8fa, #e7e9ec);
   border: 1px solid black;

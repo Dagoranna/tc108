@@ -256,7 +256,7 @@ export default function Section_10() {
               type="text"
               value={officer_corporate_title ? officer_corporate_title : ""}
               onChange={(e) => handleInput(e)}
-              className="border-b border-black"
+              className="border-b border-black min-w-min"
             />
           </div>
           <div className="px-3 ">
@@ -276,7 +276,7 @@ export default function Section_10() {
               type="text"
               value={officer_condo_title ? officer_condo_title : ""}
               onChange={(e) => handleInput(e)}
-              className="border-b border-black"
+              className="border-b border-black min-w-min"
             />
           </div>
           <div className="px-3 ">
