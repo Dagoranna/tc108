@@ -29,7 +29,7 @@ export interface DateObj {
   year: number | null;
 }
 
-interface MyMainState {
+export interface MyMainState {
   section_address: {
     borough: Borough | null;
     block: number | null;
@@ -136,21 +136,21 @@ interface MyMainState {
   section_9: {
     value_proof_attach: boolean;
     sale_1: {
-      date: DateObj;
+      date: string;
       price: number | null;
       address: string;
       block_lot: string;
       total_dwelling: number | null;
     };
     sale_2: {
-      date: DateObj;
+      date: string;
       price: number | null;
       address: string;
       block_lot: string;
       total_dwelling: number | null;
     };
     sale_3: {
-      date: DateObj;
+      date: string;
       price: number | null;
       address: string;
       block_lot: string;
@@ -165,8 +165,12 @@ interface MyMainState {
     };
     signer_name: string;
     signer_is: Signer | null;
-    signer_title: string;
-    date: DateObj;
+    fiduciary_relationship: string;
+    fiduciary_entity: string;
+    officer_corporate_title: string;
+    officer_condo_title: string;
+    llc_signer_title: string;
+    date: string;
   };
 }
 
@@ -293,33 +297,21 @@ const initialState: MyMainState = {
   section_9: {
     value_proof_attach: false,
     sale_1: {
-      date: {
-        month: null,
-        day: null,
-        year: null,
-      },
+      date: "",
       price: null,
       address: "",
       block_lot: "",
       total_dwelling: null,
     },
     sale_2: {
-      date: {
-        month: null,
-        day: null,
-        year: null,
-      },
+      date: "",
       price: null,
       address: "",
       block_lot: "",
       total_dwelling: null,
     },
     sale_3: {
-      date: {
-        month: null,
-        day: null,
-        year: null,
-      },
+      date: "",
       price: null,
       address: "",
       block_lot: "",
@@ -334,12 +326,12 @@ const initialState: MyMainState = {
     },
     signer_name: "",
     signer_is: null,
-    signer_title: "",
-    date: {
-      month: null,
-      day: null,
-      year: null,
-    },
+    fiduciary_relationship: "",
+    fiduciary_entity: "",
+    officer_corporate_title: "",
+    officer_condo_title: "",
+    llc_signer_title: "",
+    date: "",
   },
 };
 
@@ -347,6 +339,9 @@ const mainSlice = createSlice({
   name: "mainState",
   initialState,
   reducers: {
+    loadState: (state, action: PayloadAction<MyMainState>) => {
+      return action.payload;
+    },
     setData: (
       state,
       action: PayloadAction<{ path: string; value: DateObj }>
@@ -414,6 +409,7 @@ const mainSlice = createSlice({
 });
 
 export const {
+  loadState,
   setData,
   setTextField,
   setBooleanField,

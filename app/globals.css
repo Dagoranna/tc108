@@ -14,7 +14,7 @@ input[type="text"]:not(.dateField) {
   padding-left: 0.5rem;
 }
 
-input {
+input:not([type="file"]) {
   color: rgb(122, 8, 252);
 }
 
@@ -26,9 +26,31 @@ body {
 main {
   margin-right: 1.5rem;
   margin-left: 1.5rem;
-  margin-top: 3rem;
+  margin-top: 1rem;
   margin-bottom: 3rem;
   height: 100%;
+}
+
+.button-14 {
+  background-image: linear-gradient(#f7f8fa, #e7e9ec);
+  border: 1px solid black;
+  border-radius: 3px;
+  cursor: pointer;
+
+  height: 2em;
+  padding: 0 10px;
+  margin: 2px;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.button-14:active {
+  border-bottom-color: #a2a6ac;
+}
+
+.button-14:hover {
+  background-image: linear-gradient(#f7f8fa, #828283);
 }
 
 .topAddress {

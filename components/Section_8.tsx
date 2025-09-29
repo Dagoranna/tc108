@@ -310,7 +310,7 @@ export default function Section_8() {
             id="section_8.c.details"
             value={c_details ? c_details : ""}
             onChange={(e) => handleInput(e)}
-            className="border-b border-black flex-grow"
+            className="border-b border-black flex-grow mr-4"
           />
         </div>
         <div className="flex flex-wrap place-items-center text-base basis-full">
