@@ -207,7 +207,7 @@ main {
     background-color: white;
     width: 120px;
     position: absolute;
-    right: -120px;
+    right: 30px;
     border: 1px solid red;
     border-radius: 5px;
     box-shadow: 0 0 2px red;
@@ -219,7 +219,5 @@ main {
     width: 1.2rem;
     height: 1.2rem;
     font-size: 0.8em;
-    transform: none;
-    bottom: -1rem;
   }
 }
