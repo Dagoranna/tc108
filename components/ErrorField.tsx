@@ -8,6 +8,7 @@ export default function ErrorField({ title }: { title: string }) {
       <div
         className="errorField"
         title={title}
+        tabIndex={0}
         onClick={() => setShow(!show)}
         onBlur={() => setShow(false)}
       >
