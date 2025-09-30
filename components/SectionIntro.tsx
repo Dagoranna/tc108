@@ -44,18 +44,13 @@ export default function SectionIntro() {
       })
     );
   }
-
+  //        <div className="flex flex-col items-end mx-2 justify-between">
   return (
     <div className="border-l border-r border-b">
       <div className="border-t border-b arialMT flexDirection flex-wrap justify-between">
-        <div className="flex flex-col items-end mx-2 justify-between">
+        <div className="headYear">
           <div>YEAR</div>
-          <div
-            className="arial"
-            style={{ fontWeight: "bold", marginBottom: "2px" }}
-          >
-            {year}
-          </div>
+          <div className="arial font-bold mb-0.5">{year}</div>
         </div>
         <div className="topAddress">
           <div>BOROUGH</div>
@@ -116,11 +111,12 @@ export default function SectionIntro() {
           />
         </div>
       </div>
-      <div className="arial flex justify-between m-3">
+
+      <div className="arial flex justify-between m-3 mobileWrap">
         <div className="relative w-40 h-36 mt-4 min-w-40">
           <Image src="/seal.jpg" alt="Seal" fill />
         </div>
-        <div className="arial text-2xl text-center font-bold mt-3">
+        <div className="arial text-2xl text-center font-bold mt-3 mobileLastElem">
           <span style={{ letterSpacing: "-0.02em" }}>
             TAX COMMISSION OF THE CITY OF NEW YORK{" "}
           </span>
@@ -139,6 +135,7 @@ export default function SectionIntro() {
           <div className="arial text-base line-1rem">{year}</div>
         </div>
       </div>
+
       <div className="arial text-xl font-bold m-3">
         YOUR COMPLETED FORM TC108 MUST BE RECEIVED BY THE NYC TAX COMMISSION AT
         1 CENTRE ST., RM. 2400, NEW YORK, NY 10007 BY 5:00 P.M. MARCH 17, 2025.

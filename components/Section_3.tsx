@@ -95,7 +95,7 @@ export default function Section_3() {
       </div>
       <LabeledField
         title="NAME OF INDIVIDUAL OR FIRM TO BE CONTACTED"
-        additionalClass="border-r border-b"
+        additionalClass="mobileBorderRight border-b"
       >
         <input
           id="section_3.name"
@@ -163,7 +163,7 @@ export default function Section_3() {
       <div className="basis-full"></div>
       <LabeledField
         title="MAILING ADDRESS:"
-        additionalClass="border-r border-b basis-3/5"
+        additionalClass="mobileBorderRight border-b basis-3/5"
       >
         <input
           id="section_3.mail_addr"
@@ -222,6 +222,7 @@ export default function Section_3() {
         <div className="basis-full"></div>
         <div className="flex flex-wrap place-items-center w-full">
           <div className="mr-3">If “Yes”, check type of Representative:</div>
+          <div className="mobileDivider"></div>
           <input
             type="checkbox"
             id="section3.representative_type.attorney"

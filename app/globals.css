@@ -156,8 +156,49 @@ main {
   flex-direction: row;
 }
 
-@media (max-width: 768px) {
+.headYear {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.mobileBorderRight {
+  border-right: 1px solid black;
+}
+
+@media (max-width: 1000px) {
   .flexDirection {
     flex-direction: column;
+    flex-wrap: nowrap;
+  }
+
+  .topAddress {
+    width: 100% !important;
+  }
+
+  .inputTopAddress {
+    width: 100% !important;
+  }
+
+  .mobileLastElem {
+    order: 9999;
+  }
+
+  .mobileWrap {
+    flex-wrap: wrap;
+  }
+
+  .mobileDivider {
+    flex-basis: 100%;
+  }
+
+  .mobileBorderRight {
+    border-right: none;
   }
 }
+
+/*
+@media (max-width: 768px) {
+*/

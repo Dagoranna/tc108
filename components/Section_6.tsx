@@ -184,7 +184,7 @@ export default function Section_6() {
         </LabeledField>
         <LabeledField
           title="NUMBER OF BATHS"
-          additionalClass="border-r border-b basis-1/4"
+          additionalClass="mobileBorderRight border-b basis-1/4"
         >
           <input
             id="section_6.baths"
@@ -212,7 +212,7 @@ export default function Section_6() {
         </LabeledField>
         <LabeledField
           title="NUMBER OF OTHER ROOMS"
-          additionalClass="border-r border-b basis-1/4"
+          additionalClass="border-b basis-1/4"
         >
           <input
             id="section_6.other_rooms"
@@ -242,7 +242,7 @@ export default function Section_6() {
         </LabeledField>
         <LabeledField
           title="YEAR OF CONSTRUCTION (IF KNOWN)"
-          additionalClass="border-r border-b basis-1/4"
+          additionalClass="mobileBorderRight border-b basis-1/4"
         >
           <input
             id="section_6.year_of_construction"
@@ -256,7 +256,7 @@ export default function Section_6() {
         </LabeledField>
         <LabeledField
           title="NUMBER OF PARKING SPACES ON THE PROPERTY"
-          additionalClass="border-r border-b basis-1/2"
+          additionalClass="border-b basis-1/2"
         >
           <div className="flex justify-between">
             <div className="relative">
@@ -291,7 +291,7 @@ export default function Section_6() {
         </LabeledField>
         <LabeledField
           title="YEAR AND DESCRIPTION OF LAST PHYSICAL ALTERATION OR ADDITION SINCE APPLICANT ACQUIRED THE PROPERTY"
-          additionalClass="border-r border-b basis-full"
+          additionalClass="border-b basis-full"
         >
           <input
             id="section_6.last_alteration"

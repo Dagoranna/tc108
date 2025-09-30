@@ -248,47 +248,57 @@ export default function Section_10() {
               </div>
             </div>
           </div>
-          <div className="px-3 ">
-            <input
-              type="checkbox"
-              id="section_10_signer_is_officer_corporate"
-              name="section_10_signer_is_officer_corporate"
-              className="smallCheckbox"
-              checked={signer_is === "Officer of a corporate Applicant"}
-              onChange={(e) => handleSignerType(e)}
-            />
-            <label htmlFor="section_10_signer_is_officer_corporate">
-              An officer of a corporate Applicant. Title:
-            </label>
-            <input
-              id="section_10.officer_corporate_title"
-              type="text"
-              readOnly={signer_is !== "Officer of a corporate Applicant"}
-              value={officer_corporate_title ? officer_corporate_title : ""}
-              onChange={(e) => handleInput(e, dispatch)}
-              className="border-b border-black min-w-min"
-            />
+          <div className="px-3 flex flex-wrap">
+            <div>
+              <input
+                type="checkbox"
+                id="section_10_signer_is_officer_corporate"
+                name="section_10_signer_is_officer_corporate"
+                className="smallCheckbox"
+                checked={signer_is === "Officer of a corporate Applicant"}
+                onChange={(e) => handleSignerType(e)}
+              />
+              <label htmlFor="section_10_signer_is_officer_corporate">
+                An officer of a corporate Applicant.
+              </label>
+            </div>
+            <div>
+              Title:
+              <input
+                id="section_10.officer_corporate_title"
+                type="text"
+                readOnly={signer_is !== "Officer of a corporate Applicant"}
+                value={officer_corporate_title ? officer_corporate_title : ""}
+                onChange={(e) => handleInput(e, dispatch)}
+                className="border-b border-black min-w-min"
+              />
+            </div>
           </div>
-          <div className="px-3 ">
-            <input
-              type="checkbox"
-              id="section_10_signer_is_officer_condo"
-              name="section_10_signer_is_officer_condo"
-              className="smallCheckbox"
-              checked={signer_is === "An officer of the condominium"}
-              onChange={(e) => handleSignerType(e)}
-            />
-            <label htmlFor="section_10_signer_is_officer_condo">
-              An officer of the condominium board of managers. Title:
-            </label>
-            <input
-              id="section_10.officer_condo_title"
-              type="text"
-              readOnly={signer_is !== "An officer of the condominium"}
-              value={officer_condo_title ? officer_condo_title : ""}
-              onChange={(e) => handleInput(e, dispatch)}
-              className="border-b border-black min-w-min"
-            />
+          <div className="px-3 flex flex-wrap">
+            <div>
+              <input
+                type="checkbox"
+                id="section_10_signer_is_officer_condo"
+                name="section_10_signer_is_officer_condo"
+                className="smallCheckbox"
+                checked={signer_is === "An officer of the condominium"}
+                onChange={(e) => handleSignerType(e)}
+              />
+              <label htmlFor="section_10_signer_is_officer_condo">
+                An officer of the condominium board of managers.
+              </label>
+            </div>
+            <div>
+              Title:
+              <input
+                id="section_10.officer_condo_title"
+                type="text"
+                readOnly={signer_is !== "An officer of the condominium"}
+                value={officer_condo_title ? officer_condo_title : ""}
+                onChange={(e) => handleInput(e, dispatch)}
+                className="border-b border-black min-w-min"
+              />
+            </div>
           </div>
           <div className="px-3 ">
             <input

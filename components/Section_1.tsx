@@ -30,7 +30,7 @@ export default function Section_1() {
       </div>
       <LabeledField
         title="BOROUGH (Bronx, Brooklyn, Manhattan, Queens or Staten Island)"
-        additionalClass="border-r border-b"
+        additionalClass="mobileBorderRight border-b"
       >
         <input
           id="section_1.borough"
@@ -51,7 +51,10 @@ export default function Section_1() {
         />
         {blockError && <ErrorField title="The field must contain 1-5 digits" />}
       </LabeledField>
-      <LabeledField title="LOT" additionalClass="border-r border-b relative">
+      <LabeledField
+        title="LOT"
+        additionalClass="mobileBorderRight border-b relative"
+      >
         <input
           id="section_1.lot"
           type="text"

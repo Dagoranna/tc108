@@ -1,3 +1,21 @@
+# Add class based on applicant description
+_Exported on 9/30/2025 at 09:32:05 GMT+3 from Cursor (1.7.17)_
+
+---
+
+**User**
+
+with condition applicant_descr !== "Other" add class  text-gray-500 to className
+
+---
+
+**Cursor**
+
+I'll open `components/Section_2.tsx` to locate the input and update its `className` to include `text-gray-500` when `applicant_descr !== "Other"`.
+
+I'll update the input's className to conditionally append `text-gray-500` when `applicant_descr !== "Other"`, then check for linter issues in `components/Section_2.tsx`.
+
+```typescriptreact
 "use client";
 import React from "react";
 import type { RootState, AppDispatch } from "../app/store/store";
@@ -105,7 +123,6 @@ export default function Section_2() {
           <div className="arial font-bold">a) APPLICANT’S NAME: </div>{" "}
           <input
             id="section_2.applicant_name"
-            type="text"
             className="inputTopAddress w-1/2"
             value={applicant_name ? applicant_name : ""}
             onChange={(e) => handleInput(e, dispatch)}
@@ -150,9 +167,8 @@ export default function Section_2() {
           <label htmlFor="applicant_descr_other">Other (specify):</label>
           <input
             id="section_2.other_descr"
-            type="text"
-            readOnly={applicant_descr !== "Other"}
-            className="inputTopAddress"
+            readOnly = {applicant_descr !== "Other"}
+            className={`inputTopAddress ${applicant_descr !== "Other" ? "text-gray-500" : ""}`}
             style={{ width: "24rem" }}
             value={other_descr ? other_descr : ""}
             onChange={(e) => handleInput(e, dispatch)}
@@ -182,48 +198,39 @@ export default function Section_2() {
           </label>
         </div>
         <div className="px-3 text-xl flex flex-wrap items-center arialMT">
-          <div className="mobileDivider">
+          <div>
             Source of Board’s authority{" "}
             <span className="arial font-bold mr-4">(check one):</span>
           </div>
           <input
             type="checkbox"
             id="condo_auth_bylaws"
-            readOnly={applicant_descr !== "Condo"}
             name="condo_auth_bylaws"
             className="boldCheckbox"
             checked={condo_auth === "By-laws"}
-            onChange={(e) => {
-              if (applicant_descr === "Condo") handleCondoAuthority(e);
-            }}
+            onChange={(e) => handleCondoAuthority(e)}
           />
           <label htmlFor="condo_auth_bylaws" className="mr-4">
             By-laws
           </label>
-          <div className="mobileDivider">
-            <input
-              type="checkbox"
-              id="condo_auth_individual"
-              readOnly={applicant_descr !== "Condo"}
-              name="condo_auth_individual"
-              className="boldCheckbox"
-              checked={condo_auth === "Individual"}
-              onChange={(e) => handleCondoAuthority(e)}
-            />
-            <label htmlFor="condo_auth_individual" className="mr-4">
-              Individual authorization, valid under applicable law
-            </label>
-          </div>
+          <input
+            type="checkbox"
+            id="condo_auth_individual"
+            name="condo_auth_individual"
+            className="boldCheckbox"
+            checked={condo_auth === "Individual"}
+            onChange={(e) => handleCondoAuthority(e)}
+          />
+          <label htmlFor="condo_auth_individual" className="mr-4">
+            Individual authorization, valid under applicable law
+          </label>
           <input
             type="checkbox"
             id="condo_auth_attorney"
-            readOnly={applicant_descr !== "Condo"}
             name="condo_auth_attorney"
             className="boldCheckbox"
             checked={condo_auth === "Power-of-Attorney"}
-            onChange={(e) => {
-              if (applicant_descr === "Condo") handleCondoAuthority(e);
-            }}
+            onChange={(e) => handleCondoAuthority(e)}
           />
           <label htmlFor="condo_auth_attorney" className="mr-4">
             Power-of-Attorney
@@ -233,3 +240,26 @@ export default function Section_2() {
     </div>
   );
 }
+
+```
+
+- Added conditional class to `section_2.other_descr` input so it shows gray text when not editable.
+
+```152:157:components/Section_2.tsx
+            readOnly = {applicant_descr !== "Other"}
+            className={`inputTopAddress ${applicant_descr !== "Other" ? "text-gray-500" : ""}`}
+            style={{ width: "24rem" }}
+            value={other_descr ? other_descr : ""}
+            onChange={(e) => handleInput(e, dispatch)}
+```
+
+All good—no linter issues.
+
+```typescriptreact
+            readOnly = {applicant_descr !== "Other"}
+            className={`inputTopAddress ${applicant_descr !== "Other" ? "text-gray-500" : ""}`}
+            style={{ width: "24rem" }}
+            value={other_descr ? other_descr : ""}
+            onChange={(e) => handleInput(e, dispatch)}
+```
+

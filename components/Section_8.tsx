@@ -213,7 +213,9 @@ export default function Section_8() {
             onChange={(e) => handleInput(e, dispatch)}
             className="border-b border-black flex-grow"
           />
+          <div className="mobileDivider"></div>
           <div className="ml-2">Closing Date:</div>
+
           <DateField path="a.sellers_info.closing_date" />
           <div className="ml-2 relative">
             Price:$
@@ -275,6 +277,7 @@ export default function Section_8() {
             onChange={(e) => handleInput(e, dispatch)}
             className="border-b border-black flex-grow"
           />
+          <div className="mobileDivider"></div>
           <div className="ml-2">Closing Date:</div>
           <DateField path="b.buyers_info.closing_date" />
           <div className="ml-2 relative">
