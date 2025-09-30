@@ -204,10 +204,20 @@ main {
 
   .mobileHint {
     display: block;
-    width: 30px;
+    background-color: white;
+    width: 60px;
     position: absolute;
     right: -30px;
     border: 1px solid black;
     border-radius: 5px;
+  }
+
+  .errorField {
+    width: 1.2em;
+    height: 1.2em;
+    font-size: 0.8em;
+    right: 0.2em;
+    inset: 50% 0 auto auto;
+    transform: translate(0, -50%);
   }
 }
