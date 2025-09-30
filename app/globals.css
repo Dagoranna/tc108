@@ -219,6 +219,6 @@ main {
     right: 0.2em;
     inset: 50% 0 auto auto;
     transform: translate(0, -50%);
-    top: -50%;
+    bottom: -1rem;
   }
 }
