@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../app/store/slices/mainSlice";
 import { ASSESSMENT_YEAR as year } from "../app/store/slices/mainSlice";
 import ErrorField from "../components/ErrorField";
-import { handleError } from "../app/utils/mainUtils";
+import { handleInput, handleError } from "../app/utils/mainUtils";
 
 export default function SectionIntro() {
   const dispatch: AppDispatch = useDispatch();
@@ -45,20 +45,9 @@ export default function SectionIntro() {
     );
   }
 
-  function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.currentTarget.value;
-    //TODO: switch with checks for values
-    dispatch(
-      actions.setTextField({
-        path: e.currentTarget.id,
-        value: value,
-      })
-    );
-  }
-
   return (
     <div className="border-l border-r border-b">
-      <div className="border-t border-b arialMT flex flex-wrap justify-between">
+      <div className="border-t border-b arialMT flexDirection flex-wrap justify-between">
         <div className="flex flex-col items-end mx-2 justify-between">
           <div>YEAR</div>
           <div
@@ -74,7 +63,7 @@ export default function SectionIntro() {
             id="section_address.borough"
             className="inputTopAddress"
             value={borough ? borough : ""}
-            onChange={(e) => handleInput(e)}
+            onChange={(e) => handleInput(e, dispatch)}
           />
         </div>
         <div className="topAddress relative">
@@ -84,7 +73,7 @@ export default function SectionIntro() {
             className="inputTopAddress"
             style={{ width: "5rem" }}
             value={block ? block : ""}
-            onChange={(e) => handleInput(e)}
+            onChange={(e) => handleInput(e, dispatch)}
             onBlur={(e) =>
               setBlockError(handleError(e.target.value, /^\d{1,5}$/))
             }
@@ -100,7 +89,7 @@ export default function SectionIntro() {
             className="inputTopAddress"
             style={{ width: "4rem" }}
             value={lot ? lot : ""}
-            onChange={(e) => handleInput(e)}
+            onChange={(e) => handleInput(e, dispatch)}
             onBlur={(e) =>
               setLotError(handleError(e.target.value, /^\d{1,4}$/))
             }
@@ -114,7 +103,7 @@ export default function SectionIntro() {
             className="inputTopAddress"
             style={{ width: "5rem" }}
             value={group ? group : ""}
-            onChange={(e) => handleInput(e)}
+            onChange={(e) => handleInput(e, dispatch)}
           />
         </div>
         <div className="topAddress" style={{ marginRight: "5rem" }}>
@@ -123,7 +112,7 @@ export default function SectionIntro() {
             id="section_address.reviewed_by"
             className="inputTopAddress"
             value={reviewed_by ? reviewed_by : ""}
-            onChange={(e) => handleInput(e)}
+            onChange={(e) => handleInput(e, dispatch)}
           />
         </div>
       </div>

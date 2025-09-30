@@ -1,28 +1,21 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import type { RootState, AppDispatch } from "../app/store/store";
 import { useSelector, useDispatch } from "react-redux";
-import * as actions from "../app/store/slices/mainSlice";
+import ErrorField from "../components/ErrorField";
+import { handleInput, handleError } from "../app/utils/mainUtils";
 
 export default function Section_4() {
   const dispatch: AppDispatch = useDispatch();
   const market_value = useSelector(
     (state: RootState) => state.main.section_4.market_value
   );
+  const [market_valueError, setMarket_valueError] = useState(false);
+
   const assessed_value = useSelector(
     (state: RootState) => state.main.section_4.assessed_value
   );
-
-  function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.currentTarget.value;
-    //TODO: switch with checks for values
-    dispatch(
-      actions.setTextField({
-        path: e.currentTarget.id,
-        value: value,
-      })
-    );
-  }
+  const [assessed_valueError, setAssessed_valueError] = useState(false);
 
   return (
     <div className="border-l border-r border-b flex flex-wrap text-base">
@@ -34,20 +27,28 @@ export default function Section_4() {
           instructions for an explanation of market value.
         </div>
       </div>
-      <div className="arialMT flex w-full ml-3 leading-tight mb-3">
+      <div className="arialMT flex w-full ml-3 leading-tight mb-3 relative">
         <div className="basis-1/2">
           a) {"Applicant's"} estimate of market value (what the property <br />
           would sell for in the current market):
         </div>
         <div className="flex place-items-center basis-1/2">
-          <div>a) $ </div>
+          <div>a) $</div>
           <input
             type="text"
             id="section_4.market_value"
             className="border-b border-black mb-1 mr-3 flex-grow"
             value={market_value ? market_value : ""}
-            onChange={(e) => handleInput(e)}
+            onChange={(e) => handleInput(e, dispatch)}
+            onBlur={(e) =>
+              setMarket_valueError(
+                handleError(e.target.value, /^\d+(\.\d{1,2})?$/)
+              )
+            }
           />
+          {market_valueError && (
+            <ErrorField title="Enter amount in numbers only, up to 2 decimal places, no $" />
+          )}
         </div>
       </div>
       <div className="arialMT flex w-full ml-3 leading-tight mb-3">
@@ -56,13 +57,15 @@ export default function Section_4() {
           <div>b) $ </div>
           <div
             id="section_4.market_value"
-            className="border-b border-black mb-1 mr-3 flex-grow"
+            className="border-b border-black mb-1 mr-3 flex-grow pl-2 h-5"
           >
-            {market_value ? (Number(market_value) * 0.06).toFixed(2) : ""}
+            {market_value && !isNaN(Number(market_value))
+              ? (Number(market_value) * 0.06).toFixed(2)
+              : ""}
           </div>
         </div>
       </div>
-      <div className="arialMT flex w-full ml-3 leading-tight">
+      <div className="arialMT flex w-full ml-3 leading-tight relative">
         <div className="basis-1/2">
           c) Assessed Value (from Notice of Property Value) <br />
           <b>If line c is less than line b, DO NOT FILE TC108.</b>
@@ -74,8 +77,16 @@ export default function Section_4() {
             id="section_4.assessed_value"
             className="border-b border-black mb-1 mr-3 flex-grow"
             value={assessed_value ? assessed_value : ""}
-            onChange={(e) => handleInput(e)}
+            onChange={(e) => handleInput(e, dispatch)}
+            onBlur={(e) =>
+              setAssessed_valueError(
+                handleError(e.target.value, /^\d+(\.\d{1,2})?$/)
+              )
+            }
           />
+          {assessed_valueError && (
+            <ErrorField title="Enter amount in numbers only, up to 2 decimal places, no $" />
+          )}
         </div>
       </div>
       <div className="ArialMT ml-2 text-lg leading-tight">

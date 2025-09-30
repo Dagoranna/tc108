@@ -3,6 +3,7 @@ import React from "react";
 import type { RootState, AppDispatch } from "../app/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../app/store/slices/mainSlice";
+import { handleInput } from "../app/utils/mainUtils";
 
 export default function Section_2() {
   const dispatch: AppDispatch = useDispatch();
@@ -18,17 +19,6 @@ export default function Section_2() {
   const condo_auth = useSelector(
     (state: RootState) => state.main.section_2.condo_auth
   );
-
-  function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.currentTarget.value;
-    //TODO: switch with checks for values
-    dispatch(
-      actions.setTextField({
-        path: e.currentTarget.id,
-        value: value,
-      })
-    );
-  }
 
   function handleApplicantDescr(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.currentTarget.id;
@@ -115,9 +105,10 @@ export default function Section_2() {
           <div className="arial font-bold">a) APPLICANT’S NAME: </div>{" "}
           <input
             id="section_2.applicant_name"
+            type="text"
             className="inputTopAddress w-1/2"
             value={applicant_name ? applicant_name : ""}
-            onChange={(e) => handleInput(e)}
+            onChange={(e) => handleInput(e, dispatch)}
           />
         </div>
         <div className="arial font-bold px-3">
@@ -159,10 +150,12 @@ export default function Section_2() {
           <label htmlFor="applicant_descr_other">Other (specify):</label>
           <input
             id="section_2.other_descr"
+            type="text"
+            readOnly={applicant_descr !== "Other"}
             className="inputTopAddress"
             style={{ width: "24rem" }}
             value={other_descr ? other_descr : ""}
-            onChange={(e) => handleInput(e)}
+            onChange={(e) => handleInput(e, dispatch)}
           />
           <span>
             (<b>Attach TC200</b> and documentation specified in Part 2 of
@@ -196,10 +189,13 @@ export default function Section_2() {
           <input
             type="checkbox"
             id="condo_auth_bylaws"
+            readOnly={applicant_descr !== "Condo"}
             name="condo_auth_bylaws"
             className="boldCheckbox"
             checked={condo_auth === "By-laws"}
-            onChange={(e) => handleCondoAuthority(e)}
+            onChange={(e) => {
+              if (applicant_descr === "Condo") handleCondoAuthority(e);
+            }}
           />
           <label htmlFor="condo_auth_bylaws" className="mr-4">
             By-laws
@@ -207,6 +203,7 @@ export default function Section_2() {
           <input
             type="checkbox"
             id="condo_auth_individual"
+            readOnly={applicant_descr !== "Condo"}
             name="condo_auth_individual"
             className="boldCheckbox"
             checked={condo_auth === "Individual"}
@@ -218,10 +215,13 @@ export default function Section_2() {
           <input
             type="checkbox"
             id="condo_auth_attorney"
+            readOnly={applicant_descr !== "Condo"}
             name="condo_auth_attorney"
             className="boldCheckbox"
             checked={condo_auth === "Power-of-Attorney"}
-            onChange={(e) => handleCondoAuthority(e)}
+            onChange={(e) => {
+              if (applicant_descr === "Condo") handleCondoAuthority(e);
+            }}
           />
           <label htmlFor="condo_auth_attorney" className="mr-4">
             Power-of-Attorney

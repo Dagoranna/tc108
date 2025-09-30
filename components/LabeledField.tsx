@@ -17,7 +17,7 @@ export default function LabeledField({
   additionalClass,
   children,
 }: LabeledFieldProps) {
-  const newClass = `flex flex-col flex-grow p-0.5 ${additionalClass}`;
+  const newClass = `flex flex-col flex-grow p-0.5 relative ${additionalClass}`;
   return (
     <div className={newClass} style={styleObj}>
       <div className="arialMT text-xs">{title}</div>

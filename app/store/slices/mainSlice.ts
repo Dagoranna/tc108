@@ -331,7 +331,7 @@ const initialState: MyMainState = {
     officer_corporate_title: "",
     officer_condo_title: "",
     llc_signer_title: "",
-    date: "",
+    date: new Date().toLocaleDateString("en-US").replace(/\//g, "."),
   },
 };
 
@@ -396,24 +396,10 @@ const mainSlice = createSlice({
 
       current[keys[keys.length - 1]] = action.payload.value;
     },
-    /*setLoginState: (state, action: PayloadAction<boolean>) => {
-      state.loginState = action.payload;
-    },
-    setUserEmail: (state, action: PayloadAction<string>) => {
-      state.userEmail = action.payload;
-    },
-    setUserName: (state, action: PayloadAction<string>) => {
-      state.userName = action.payload;
-    },*/
   },
 });
 
-export const {
-  loadState,
-  setData,
-  setTextField,
-  setBooleanField,
-  /*setLoginState, setUserEmail, setUserName*/
-} = mainSlice.actions;
+export const { loadState, setData, setTextField, setBooleanField } =
+  mainSlice.actions;
 
 export default mainSlice.reducer;

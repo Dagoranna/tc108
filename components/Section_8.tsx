@@ -1,9 +1,11 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import type { RootState, AppDispatch } from "../app/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../app/store/slices/mainSlice";
 import DateField from "../components/DateField";
+import ErrorField from "../components/ErrorField";
+import { handleInput, handleError } from "../app/utils/mainUtils";
 
 export default function Section_8() {
   const dispatch: AppDispatch = useDispatch();
@@ -16,6 +18,8 @@ export default function Section_8() {
   const a_sellers_info_price = useSelector(
     (state: RootState) => state.main.section_8.a.sellers_info.price
   );
+  const [a_sellers_info_priceError, setA_sellers_info_priceError] =
+    useState(false);
 
   const b_signed_for_sell = useSelector(
     (state: RootState) => state.main.section_8.b.signed_for_sell
@@ -26,6 +30,8 @@ export default function Section_8() {
   const b_buyers_info_price = useSelector(
     (state: RootState) => state.main.section_8.b.buyers_info.price
   );
+  const [b_buyers_info_priceError, setB_buyers_info_priceError] =
+    useState(false);
 
   const c_offered_for_sale = useSelector(
     (state: RootState) => state.main.section_8.c.offered_for_sale
@@ -48,17 +54,7 @@ export default function Section_8() {
   const e_details_cost = useSelector(
     (state: RootState) => state.main.section_8.e.details.cost
   );
-
-  function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.currentTarget.value;
-    //TODO: switch with checks for values
-    dispatch(
-      actions.setTextField({
-        path: e.currentTarget.id,
-        value: value,
-      })
-    );
-  }
+  const [e_details_costError, setE_details_costError] = useState(false);
 
   function handleBoughtAfter(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.currentTarget.id;
@@ -213,19 +209,32 @@ export default function Section_8() {
             type="text"
             id="section_8.a.sellers_info.name"
             value={a_sellers_info_name ? a_sellers_info_name : ""}
-            onChange={(e) => handleInput(e)}
+            readOnly={!a_bought_after}
+            onChange={(e) => handleInput(e, dispatch)}
             className="border-b border-black flex-grow"
           />
           <div className="ml-2">Closing Date:</div>
           <DateField path="a.sellers_info.closing_date" />
-          <div className="ml-2">Price:$</div>
-          <input
-            type="text"
-            id="section_8.a.sellers_info.price"
-            value={a_sellers_info_price ? a_sellers_info_price : ""}
-            onChange={(e) => handleInput(e)}
-            className="border-b border-black w-20 mr-4"
-          />
+          <div className="ml-2 relative">
+            Price:$
+            <input
+              type="text"
+              id="section_8.a.sellers_info.price"
+              value={a_sellers_info_price ? a_sellers_info_price : ""}
+              className="border-b border-black w-20 mr-4"
+              readOnly={!a_bought_after}
+              onChange={(e) => handleInput(e, dispatch)}
+              onBlur={(e) => {
+                if (a_bought_after)
+                  setA_sellers_info_priceError(
+                    handleError(e.target.value, /^\d+(\.\d{1,2})?$/)
+                  );
+              }}
+            />
+            {a_sellers_info_priceError && (
+              <ErrorField title="Enter amount in numbers only, up to 2 decimal places, no $" />
+            )}
+          </div>
         </div>
         <div className="flex flex-wrap place-items-center text-base basis-full">
           <div>
@@ -261,20 +270,33 @@ export default function Section_8() {
           <input
             type="text"
             id="section_8.b.buyers_info.name"
+            readOnly={!b_signed_for_sell}
             value={b_buyers_info_name ? b_buyers_info_name : ""}
-            onChange={(e) => handleInput(e)}
+            onChange={(e) => handleInput(e, dispatch)}
             className="border-b border-black flex-grow"
           />
           <div className="ml-2">Closing Date:</div>
           <DateField path="b.buyers_info.closing_date" />
-          <div className="ml-2">Price:$</div>
-          <input
-            type="text"
-            id="section_8.b.buyers_info.price"
-            value={b_buyers_info_price ? b_buyers_info_price : ""}
-            onChange={(e) => handleInput(e)}
-            className="border-b border-black w-20 mr-4"
-          />
+          <div className="ml-2 relative">
+            Price:$
+            <input
+              type="text"
+              id="section_8.b.buyers_info.price"
+              value={b_buyers_info_price ? b_buyers_info_price : ""}
+              className="border-b border-black w-20 mr-4"
+              readOnly={!b_signed_for_sell}
+              onChange={(e) => handleInput(e, dispatch)}
+              onBlur={(e) => {
+                if (b_signed_for_sell)
+                  setB_buyers_info_priceError(
+                    handleError(e.target.value, /^\d+(\.\d{1,2})?$/)
+                  );
+              }}
+            />
+            {b_buyers_info_priceError && (
+              <ErrorField title="Enter amount in numbers only, up to 2 decimal places, no $" />
+            )}
+          </div>
         </div>
         <div className="flex flex-wrap place-items-center text-base basis-full">
           <div>c) Is the property being offered for sale now?</div>
@@ -309,7 +331,8 @@ export default function Section_8() {
             type="text"
             id="section_8.c.details"
             value={c_details ? c_details : ""}
-            onChange={(e) => handleInput(e)}
+            readOnly={!c_offered_for_sale}
+            onChange={(e) => handleInput(e, dispatch)}
             className="border-b border-black flex-grow mr-4"
           />
         </div>
@@ -384,8 +407,9 @@ export default function Section_8() {
                   <input
                     type="text"
                     id="section_8.e.details.what_done"
+                    readOnly={!e_alteration_after}
                     value={e_details_what_done ? e_details_what_done : ""}
-                    onChange={(e) => handleInput(e)}
+                    onChange={(e) => handleInput(e, dispatch)}
                     className="border-b border-black flex-grow"
                   />
                 </div>
@@ -398,14 +422,25 @@ export default function Section_8() {
                   <DateField path="section_8.e.details.finish_date" />
                 </div>
                 <div className="flex flex-grow mx-2 flex-wrap items-center">
-                  <div>(3) the total direct and indirect cost: $</div>
-                  <input
-                    type="text"
-                    id="section_8.e.details.cost"
-                    value={e_details_cost ? e_details_cost : ""}
-                    onChange={(e) => handleInput(e)}
-                    className="border-b border-black flex-grow"
-                  />
+                  <div className="relative">
+                    (3) the total direct and indirect cost: $
+                    <input
+                      type="text"
+                      id="section_8.e.details.cost"
+                      readOnly={!e_alteration_after}
+                      value={e_details_cost ? e_details_cost : ""}
+                      onChange={(e) => handleInput(e, dispatch)}
+                      className="border-b border-black flex-grow"
+                      onBlur={(e) =>
+                        setE_details_costError(
+                          handleError(e.target.value, /^\d+(\.\d{1,2})?$/)
+                        )
+                      }
+                    />
+                    {e_details_costError && (
+                      <ErrorField title="Enter amount in numbers only, up to 2 decimal places, no $" />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

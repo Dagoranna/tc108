@@ -1,9 +1,11 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import type { RootState, AppDispatch } from "../app/store/store";
 import { useSelector, useDispatch } from "react-redux";
 import * as actions from "../app/store/slices/mainSlice";
 import LabeledField from "../components/LabeledField";
+import ErrorField from "../components/ErrorField";
+import { handleInput, handleError } from "../app/utils/mainUtils";
 
 export default function Section_10() {
   const dispatch: AppDispatch = useDispatch();
@@ -16,6 +18,8 @@ export default function Section_10() {
   const address_lot = useSelector(
     (state: RootState) => state.main.section_10.address.lot
   );
+  const [blockError, setBlockError] = useState(false);
+  const [lotError, setLotError] = useState(false);
 
   const signer_name = useSelector(
     (state: RootState) => state.main.section_10.signer_name
@@ -44,17 +48,6 @@ export default function Section_10() {
 
   function handleUploadSignature() {
     signatureRef.current?.click();
-  }
-
-  function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.currentTarget.value;
-    //TODO: switch with checks for values
-    dispatch(
-      actions.setTextField({
-        path: e.currentTarget.id,
-        value: value,
-      })
-    );
   }
 
   function handleSignerType(e: React.ChangeEvent<HTMLInputElement>) {
@@ -128,39 +121,53 @@ export default function Section_10() {
             See Instr. and TC600 “Who May Sign”
           </span>
         </div>
-        <LabeledField
-          title="BOROUGH"
-          additionalClass="border-l border-b flex-none w-28"
-        >
-          <input
-            id="section_10.address.borough"
-            type="text"
-            value={address_borough ? address_borough : ""}
-            onChange={(e) => handleInput(e)}
-          />
-        </LabeledField>
-        <LabeledField
-          title="BLOCK"
-          additionalClass="border-l border-b flex-none w-28"
-        >
-          <input
-            id="section_10.address.block"
-            type="text"
-            value={address_block ? address_block : ""}
-            onChange={(e) => handleInput(e)}
-          />
-        </LabeledField>
-        <LabeledField
-          title="LOT"
-          additionalClass="border-l border-b flex-none w-28"
-        >
-          <input
-            id="section_10.address.lot"
-            type="text"
-            value={address_lot ? address_lot : ""}
-            onChange={(e) => handleInput(e)}
-          />
-        </LabeledField>
+        <div className="flexDirection">
+          <LabeledField
+            title="BOROUGH"
+            additionalClass="border-l border-b flex-none w-28 flex-shrink"
+          >
+            <input
+              id="section_10.address.borough"
+              type="text"
+              value={address_borough ? address_borough : ""}
+              onChange={(e) => handleInput(e, dispatch)}
+            />
+          </LabeledField>
+          <LabeledField
+            title="BLOCK"
+            additionalClass="border-l border-b flex-none w-28 relative"
+          >
+            <input
+              id="section_10.address.block"
+              type="text"
+              value={address_block ? address_block : ""}
+              onChange={(e) => handleInput(e, dispatch)}
+              onBlur={(e) =>
+                setBlockError(handleError(e.target.value, /^\d{1,5}$/))
+              }
+            />
+            {blockError && (
+              <ErrorField title="The field must contain 1-5 digits" />
+            )}
+          </LabeledField>
+          <LabeledField
+            title="LOT"
+            additionalClass="border-l border-b flex-none w-28 relative"
+          >
+            <input
+              id="section_10.address.lot"
+              type="text"
+              value={address_lot ? address_lot : ""}
+              onChange={(e) => handleInput(e, dispatch)}
+              onBlur={(e) =>
+                setLotError(handleError(e.target.value, /^\d{1,4}$/))
+              }
+            />
+            {lotError && (
+              <ErrorField title="The field must contain 1-4 digits" />
+            )}
+          </LabeledField>
+        </div>
       </div>{" "}
       <div className="px-3 pb-3 arialMT text-sm">
         <div>
@@ -175,14 +182,14 @@ export default function Section_10() {
         <div className="flex">
           <div>
             a) <b>Print clearly name of person signing:</b>
+            <input
+              id="section_10.signer_name"
+              type="text"
+              value={signer_name ? signer_name : ""}
+              onChange={(e) => handleInput(e, dispatch)}
+              className="border-b border-black flex-grow mr-30 ml-3"
+            />
           </div>
-          <input
-            id="section_10.signer_name"
-            type="text"
-            value={signer_name ? signer_name : ""}
-            onChange={(e) => handleInput(e)}
-            className="border-b border-black flex-grow mr-30 ml-3"
-          />
         </div>
         <div className="flex flex-col">
           <div>
@@ -218,8 +225,9 @@ export default function Section_10() {
                 <input
                   id="section_10.fiduciary_relationship"
                   type="text"
+                  readOnly={signer_is !== "Fiduciary"}
                   value={fiduciary_relationship ? fiduciary_relationship : ""}
-                  onChange={(e) => handleInput(e)}
+                  onChange={(e) => handleInput(e, dispatch)}
                   className="border-b border-black"
                 />
                 <span className="text-base font-bold">
@@ -232,8 +240,9 @@ export default function Section_10() {
                 <input
                   id="section_10.fiduciary_entity"
                   type="text"
+                  readOnly={signer_is !== "Fiduciary"}
                   value={fiduciary_entity ? fiduciary_entity : ""}
-                  onChange={(e) => handleInput(e)}
+                  onChange={(e) => handleInput(e, dispatch)}
                   className="border-b border-black"
                 />
               </div>
@@ -254,8 +263,9 @@ export default function Section_10() {
             <input
               id="section_10.officer_corporate_title"
               type="text"
+              readOnly={signer_is !== "Officer of a corporate Applicant"}
               value={officer_corporate_title ? officer_corporate_title : ""}
-              onChange={(e) => handleInput(e)}
+              onChange={(e) => handleInput(e, dispatch)}
               className="border-b border-black min-w-min"
             />
           </div>
@@ -274,8 +284,9 @@ export default function Section_10() {
             <input
               id="section_10.officer_condo_title"
               type="text"
+              readOnly={signer_is !== "An officer of the condominium"}
               value={officer_condo_title ? officer_condo_title : ""}
-              onChange={(e) => handleInput(e)}
+              onChange={(e) => handleInput(e, dispatch)}
               className="border-b border-black min-w-min"
             />
           </div>
@@ -308,8 +319,9 @@ export default function Section_10() {
             <input
               id="section_10.llc_signer_title"
               type="text"
+              readOnly={signer_is !== "Member or manager of LLC Applicant"}
               value={llc_signer_title ? llc_signer_title : ""}
-              onChange={(e) => handleInput(e)}
+              onChange={(e) => handleInput(e, dispatch)}
               className="border-b border-black"
             />
           </div>
@@ -357,7 +369,7 @@ export default function Section_10() {
             <button
               type="button"
               onClick={handleUploadSignature}
-              className="button-14"
+              className="button-14 w-40"
             >
               Upload Signature
             </button>
@@ -368,7 +380,7 @@ export default function Section_10() {
               id="section_10.date"
               type="text"
               value={date ? date : ""}
-              onChange={(e) => handleInput(e)}
+              onChange={(e) => handleInput(e, dispatch)}
               className="border-b border-black"
             />
           </div>

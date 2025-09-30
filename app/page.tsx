@@ -5,9 +5,6 @@ import { RootState } from "../app/store/store";
 import { downloadJson } from "./utils/mainUtils";
 import { useDispatch } from "react-redux";
 import { uploadJsonFileAndDispatch } from "@/app/utils/mainUtils";
-
-//import DateField from "../components/DateField";
-//import { PayloadAction } from "@reduxjs/toolkit";
 import SectionIntro from "../components/SectionIntro";
 import Section_1 from "../components/Section_1";
 import Section_2 from "../components/Section_2";
@@ -66,12 +63,39 @@ function ImportButton() {
   );
 }
 
+function AttachButton() {
+  const attachRef = useRef<HTMLInputElement | null>(null);
+
+  const handleClick = () => {
+    attachRef.current?.click();
+  };
+
+  return (
+    <>
+      <input
+        type="file"
+        ref={attachRef}
+        className="hidden"
+        multiple
+        onChange={async (e) => {
+          const file = e.target.files?.[0];
+          if (!file) return;
+        }}
+      />
+      <button type="button" onClick={handleClick} className="button-14">
+        Add attach
+      </button>
+    </>
+  );
+}
+
 export default function Home() {
   return (
     <main>
       <div className="flex justify-end">
         <ExportStateButton />
         <ImportButton />
+        <AttachButton />
       </div>
       <SectionIntro />
       <Section_1 />

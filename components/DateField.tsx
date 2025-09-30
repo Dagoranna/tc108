@@ -72,7 +72,7 @@ export default function DateField({ path }: { path: string }) {
   }, [selected, dispatch, path]);
 
   return (
-    <div className="flex align-end">
+    <div className="flex items-end">
       <input
         className="dateField border-b border-black w-8"
         type="text"
