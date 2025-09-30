@@ -208,7 +208,9 @@ export default function Section_2() {
               name="condo_auth_individual"
               className="boldCheckbox"
               checked={condo_auth === "Individual"}
-              onChange={(e) => handleCondoAuthority(e)}
+              onChange={(e) => {
+                if (applicant_descr === "Condo") handleCondoAuthority(e);
+              }}
             />
             <label htmlFor="condo_auth_individual" className="mr-4">
               Individual authorization, valid under applicable law
