@@ -32,7 +32,7 @@ export default function Section_4() {
           a) {"Applicant's"} estimate of market value (what the property <br />
           would sell for in the current market):
         </div>
-        <div className="flex place-items-center  w-2/4">
+        <div className="flex place-items-center relative w-2/4">
           <div className="whitespace-nowrap">a) $</div>
           <input
             type="text"
