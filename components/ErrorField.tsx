@@ -13,8 +13,9 @@ export default function ErrorField({ title }: { title: string }) {
       >
         !
       </div>
-
-      {show && <div className="mobileHint">{title}</div>}
+      <div className="relative">
+        {show && <div className="mobileHint">{title}</div>}
+      </div>
     </>
   );
 }
