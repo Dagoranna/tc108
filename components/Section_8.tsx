@@ -204,15 +204,15 @@ export default function Section_8() {
           </div>
           <div className="ml-2">
             <b>IF YES:</b> Seller’s Name:
+            <input
+              type="text"
+              id="section_8.a.sellers_info.name"
+              value={a_sellers_info_name ? a_sellers_info_name : ""}
+              readOnly={!a_bought_after}
+              onChange={(e) => handleInput(e, dispatch)}
+              className="border-b border-black flex-grow mr-3"
+            />
           </div>
-          <input
-            type="text"
-            id="section_8.a.sellers_info.name"
-            value={a_sellers_info_name ? a_sellers_info_name : ""}
-            readOnly={!a_bought_after}
-            onChange={(e) => handleInput(e, dispatch)}
-            className="border-b border-black flex-grow"
-          />
           <div className="mobileDivider"></div>
           <div className="ml-2">Closing Date:</div>
 
@@ -268,15 +268,15 @@ export default function Section_8() {
           </div>
           <div className="ml-2">
             <b>IF YES:</b> Buyer’s Name:
+            <input
+              type="text"
+              id="section_8.b.buyers_info.name"
+              readOnly={!b_signed_for_sell}
+              value={b_buyers_info_name ? b_buyers_info_name : ""}
+              onChange={(e) => handleInput(e, dispatch)}
+              className="border-b border-black flex-grow mr-3"
+            />
           </div>
-          <input
-            type="text"
-            id="section_8.b.buyers_info.name"
-            readOnly={!b_signed_for_sell}
-            value={b_buyers_info_name ? b_buyers_info_name : ""}
-            onChange={(e) => handleInput(e, dispatch)}
-            className="border-b border-black flex-grow"
-          />
           <div className="mobileDivider"></div>
           <div className="ml-2">Closing Date:</div>
           <DateField path="b.buyers_info.closing_date" />
@@ -370,7 +370,7 @@ export default function Section_8() {
           </div>
         </div>
         <div className="flex flex-wrap place-items-center text-base basis-full">
-          <div>
+          <div className="mr-4">
             e) Since January 5, 2023 has there been any construction, demolition
             or major alteration work or have plans for demolition or a new
             building been filed with the Buildings Dept.?
