@@ -169,7 +169,7 @@ export default function Section_6() {
       <div className="flex flex-wrap">
         <LabeledField
           title="NUMBER OF KITCHENS"
-          additionalClass="border-r border-b basis-1/4"
+          additionalClass="mobileBorderRight border-b basis-1/4"
         >
           <input
             id="section_6.kitchens"
@@ -197,7 +197,7 @@ export default function Section_6() {
         </LabeledField>
         <LabeledField
           title="NUMBER OF BEDROOMS"
-          additionalClass="border-r border-b basis-1/4"
+          additionalClass="mobileBorderRight border-b basis-1/4"
         >
           <input
             id="section_6.bedrooms"
@@ -227,7 +227,7 @@ export default function Section_6() {
         </LabeledField>
         <LabeledField
           title="NUMBER OF STORIES (ABOVE BASEMENT)"
-          additionalClass="border-r border-b basis-1/4"
+          additionalClass="mobileBorderRight border-b basis-1/4"
         >
           <input
             id="section_6.stories"
@@ -266,7 +266,7 @@ export default function Section_6() {
                 type="text"
                 value={parking_indoor ? parking_indoor : ""}
                 onChange={(e) => handleInput(e, dispatch)}
-                className="border-b border-black w-20"
+                className="border-b border-black w-20 ml-3 mb-1"
                 onBlur={(e) =>
                   setParking_indoorError(handleError(e.target.value, /^\d+$/))
                 }
@@ -280,7 +280,7 @@ export default function Section_6() {
                 type="text"
                 value={parking_outdoor ? parking_outdoor : ""}
                 onChange={(e) => handleInput(e, dispatch)}
-                className="border-b border-black w-20"
+                className="border-b border-black w-20 ml-3 mb-1"
                 onBlur={(e) =>
                   setParking_outdoorError(handleError(e.target.value, /^\d+$/))
                 }

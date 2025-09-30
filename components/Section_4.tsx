@@ -28,16 +28,16 @@ export default function Section_4() {
         </div>
       </div>
       <div className="arialMT flex w-full ml-3 leading-tight mb-3 relative">
-        <div className="basis-1/2">
+        <div className=" w-2/4">
           a) {"Applicant's"} estimate of market value (what the property <br />
           would sell for in the current market):
         </div>
-        <div className="flex place-items-center basis-1/2">
-          <div className="whitespace-nowrap ml-3">a) $</div>
+        <div className="flex place-items-center  w-2/4">
+          <div className="whitespace-nowrap">a) $</div>
           <input
             type="text"
             id="section_4.market_value"
-            className="border-b border-black mb-1 mr-3 flex-grow"
+            className="border-b border-black mb-1 mr-3 flex-grow flex-shrink min-w-0"
             value={market_value ? market_value : ""}
             onChange={(e) => handleInput(e, dispatch)}
             onBlur={(e) =>
@@ -52,8 +52,8 @@ export default function Section_4() {
         </div>
       </div>
       <div className="arialMT flex w-full ml-3 leading-tight mb-3">
-        <div className="basis-1/2">b) Multiply line a by 6% (.06)</div>
-        <div className="flex basis-1/2">
+        <div className="w-2/4">b) Multiply line a by 6% (.06)</div>
+        <div className="flex w-2/4">
           <div>b) $ </div>
           <div
             id="section_4.market_value"
@@ -66,16 +66,16 @@ export default function Section_4() {
         </div>
       </div>
       <div className="arialMT flex w-full ml-3 leading-tight relative">
-        <div className="basis-1/2">
+        <div className="w-2/4">
           c) Assessed Value (from Notice of Property Value) <br />
           <b>If line c is less than line b, DO NOT FILE TC108.</b>
         </div>
-        <div className="flex place-items-center basis-1/2">
-          <div className="whitespace-nowrap ml-3">c) $</div>
+        <div className="flex place-items-center w-2/4">
+          <div className="whitespace-nowrap">c) $</div>
           <input
             type="text"
             id="section_4.assessed_value"
-            className="border-b border-black mb-1 mr-3 flex-grow flex-shrink"
+            className="border-b border-black mb-1 mr-3 flex-grow flex-shrink min-w-0"
             value={assessed_value ? assessed_value : ""}
             onChange={(e) => handleInput(e, dispatch)}
             onBlur={(e) =>

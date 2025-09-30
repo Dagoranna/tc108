@@ -384,14 +384,14 @@ export default function Section_10() {
               Upload Signature
             </button>
           </div>
-          <div>
+          <div className="ml-3 ">
             Date:
             <input
               id="section_10.date"
               type="text"
               value={date ? date : ""}
               onChange={(e) => handleInput(e, dispatch)}
-              className="border-b border-black"
+              className="border-b border-black w-20 mr-3"
             />
           </div>
         </div>
