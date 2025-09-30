@@ -266,7 +266,7 @@ export default function Section_6() {
                 type="text"
                 value={parking_indoor ? parking_indoor : ""}
                 onChange={(e) => handleInput(e, dispatch)}
-                className="border-b border-black"
+                className="border-b border-black w-20"
                 onBlur={(e) =>
                   setParking_indoorError(handleError(e.target.value, /^\d+$/))
                 }
@@ -280,7 +280,7 @@ export default function Section_6() {
                 type="text"
                 value={parking_outdoor ? parking_outdoor : ""}
                 onChange={(e) => handleInput(e, dispatch)}
-                className="border-b border-black"
+                className="border-b border-black w-20"
                 onBlur={(e) =>
                   setParking_outdoorError(handleError(e.target.value, /^\d+$/))
                 }
