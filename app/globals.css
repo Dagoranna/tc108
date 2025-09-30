@@ -168,6 +168,10 @@ main {
   border-right: 1px solid black;
 }
 
+.mobileHint {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .flexDirection {
     flex-direction: column;
@@ -196,5 +200,14 @@ main {
 
   .mobileBorderRight {
     border-right: none;
+  }
+
+  .mobileHint {
+    display: block;
+    width: 30px;
+    position: absolute;
+    right: -30px;
+    border: 1px solid black;
+    border-radius: 5px;
   }
 }
