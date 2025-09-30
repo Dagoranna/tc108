@@ -33,7 +33,7 @@ export default function Section_4() {
           would sell for in the current market):
         </div>
         <div className="flex place-items-center basis-1/2">
-          <div>a) $</div>
+          <div className="whitespace-nowrap ml-3">a) $</div>
           <input
             type="text"
             id="section_4.market_value"
@@ -71,11 +71,11 @@ export default function Section_4() {
           <b>If line c is less than line b, DO NOT FILE TC108.</b>
         </div>
         <div className="flex place-items-center basis-1/2">
-          <div>c) $ </div>
+          <div className="whitespace-nowrap ml-3">c) $</div>
           <input
             type="text"
             id="section_4.assessed_value"
-            className="border-b border-black mb-1 mr-3 flex-grow"
+            className="border-b border-black mb-1 mr-3 flex-grow flex-shrink"
             value={assessed_value ? assessed_value : ""}
             onChange={(e) => handleInput(e, dispatch)}
             onBlur={(e) =>

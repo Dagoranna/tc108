@@ -39,7 +39,10 @@ export default function Section_1() {
           onChange={(e) => handleInput(e, dispatch)}
         />
       </LabeledField>
-      <LabeledField title="BLOCK" additionalClass="border-r border-b relative">
+      <LabeledField
+        title="BLOCK"
+        additionalClass="mobileBorderRight border-b relative"
+      >
         <input
           id="section_1.block"
           type="text"
