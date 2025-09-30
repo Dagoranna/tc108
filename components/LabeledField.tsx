@@ -1,8 +1,5 @@
 "use client";
 import React from "react";
-import type { RootState, AppDispatch } from "../app/store/store";
-import { useSelector, useDispatch } from "react-redux";
-import * as actions from "../app/store/slices/mainSlice";
 
 interface LabeledFieldProps {
   title: string;
@@ -17,7 +14,7 @@ export default function LabeledField({
   additionalClass,
   children,
 }: LabeledFieldProps) {
-  const newClass = `flex flex-col flex-grow p-0.5 relative ${additionalClass}`;
+  const newClass = `flex flex-col flex-grow relative ${additionalClass}`;
   return (
     <div className={newClass} style={styleObj}>
       <div className="arialMT text-xs">{title}</div>
