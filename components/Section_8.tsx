@@ -399,7 +399,7 @@ export default function Section_8() {
               />
               <label htmlFor="section_8_e_alteration_after_yes">Yes</label>
             </div>
-            <div className="ml-2 flex flex-grow">
+            <div className="flex flexDirection">
               <div className="gap-1 whitespace-nowrap">
                 <b>IF YES:</b>
               </div>

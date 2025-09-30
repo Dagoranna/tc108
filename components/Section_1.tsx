@@ -54,10 +54,7 @@ export default function Section_1() {
         />
         {blockError && <ErrorField title="The field must contain 1-5 digits" />}
       </LabeledField>
-      <LabeledField
-        title="LOT"
-        additionalClass="mobileBorderRight border-b relative"
-      >
+      <LabeledField title="LOT" additionalClass="border-r border-b relative">
         <input
           id="section_1.lot"
           type="text"
