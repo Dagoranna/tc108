@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../app/store/store";
 import * as actions from "../app/store/slices/mainSlice";
 import type { DateObj } from "../app/store/slices/mainSlice";
+import ErrorField from "../components/ErrorField";
+import { handleError } from "../app/utils/mainUtils";
 
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
@@ -28,6 +30,7 @@ export default function DateField({ path }: { path: string }) {
   const [month, setMonth] = useState<string>("");
   const [day, setDay] = useState<string>("");
   const [year, setYear] = useState<string>("");
+  const [dateError, setDateError] = useState(false);
 
   function changeHandle(val: string, num: number, setFunc: SetFunction) {
     if (val.length > num) return;
@@ -42,6 +45,17 @@ export default function DateField({ path }: { path: string }) {
     if (!date) return;
     setSelected(date);
     setOpen(false);
+  }
+
+  function isValidDate(month: number, day: number, year: number): boolean {
+    const date = new Date(year, month - 1, day);
+
+    const checkJump =
+      date.getFullYear() === year &&
+      date.getMonth() === month - 1 &&
+      date.getDate() === day;
+
+    return checkJump;
   }
 
   useEffect(() => {
@@ -72,14 +86,17 @@ export default function DateField({ path }: { path: string }) {
   }, [selected, dispatch, path]);
 
   return (
-    <div className="flex items-end">
+    <div className="flex items-end relative">
       <input
         className="dateField border-b border-black w-8"
         type="text"
         value={month}
         placeholder="MM"
         onChange={(e) => changeHandle(e.target.value, 2, setMonth)}
-        onBlur={(e) => addZero(e.target.value, 2, setMonth)}
+        onBlur={(e) => {
+          addZero(e.target.value, 2, setMonth);
+          setDateError(handleError(e.target.value, /^\d{1,2}$/));
+        }}
       />
       /
       <input
@@ -88,7 +105,10 @@ export default function DateField({ path }: { path: string }) {
         value={day}
         placeholder="DD"
         onChange={(e) => changeHandle(e.target.value, 2, setDay)}
-        onBlur={(e) => addZero(e.target.value, 2, setDay)}
+        onBlur={(e) => {
+          addZero(e.target.value, 2, setDay);
+          setDateError(handleError(e.target.value, /^\d{1,2}$/));
+        }}
       />
       /
       <input
@@ -97,6 +117,11 @@ export default function DateField({ path }: { path: string }) {
         value={year}
         placeholder="YYYY"
         onChange={(e) => changeHandle(e.target.value, 4, setYear)}
+        onBlur={(e) => {
+          setDateError(
+            !isValidDate(Number(month), Number(day), Number(e.target.value))
+          );
+        }}
       />
       <button onClick={() => setOpen(!open)}>&#x1F4C5;</button>
       {open && (
@@ -107,6 +132,9 @@ export default function DateField({ path }: { path: string }) {
             onSelect={(date) => setFromCalendar(date)}
           />
         </div>
+      )}
+      {dateError && (
+        <ErrorField title="Enter a date in the format MM/DD/YYYY" />
       )}
     </div>
   );
