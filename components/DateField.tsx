@@ -30,6 +30,9 @@ export default function DateField({ path }: { path: string }) {
   const [month, setMonth] = useState<string>("");
   const [day, setDay] = useState<string>("");
   const [year, setYear] = useState<string>("");
+
+  const [monthError, setMonthError] = useState(false);
+  const [dayError, setDayError] = useState(false);
   const [dateError, setDateError] = useState(false);
 
   function changeHandle(val: string, num: number, setFunc: SetFunction) {
@@ -95,7 +98,7 @@ export default function DateField({ path }: { path: string }) {
         onChange={(e) => changeHandle(e.target.value, 2, setMonth)}
         onBlur={(e) => {
           addZero(e.target.value, 2, setMonth);
-          setDateError(handleError(e.target.value, /^\d{1,2}$/));
+          setMonthError(handleError(e.target.value, /^\d{1,2}$/));
         }}
       />
       /
@@ -107,7 +110,7 @@ export default function DateField({ path }: { path: string }) {
         onChange={(e) => changeHandle(e.target.value, 2, setDay)}
         onBlur={(e) => {
           addZero(e.target.value, 2, setDay);
-          setDateError(handleError(e.target.value, /^\d{1,2}$/));
+          setDayError(handleError(e.target.value, /^\d{1,2}$/));
         }}
       />
       /
@@ -133,7 +136,7 @@ export default function DateField({ path }: { path: string }) {
           />
         </div>
       )}
-      {dateError && (
+      {(monthError || dayError || dateError) && (
         <ErrorField title="Enter a date in the format MM/DD/YYYY" />
       )}
     </div>
