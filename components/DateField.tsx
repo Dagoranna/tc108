@@ -22,7 +22,7 @@ export default function DateField({ path }: { path: string }) {
         return (acc as Record<string, unknown>)[key];
       }
       return undefined;
-    }, state)
+    }, state.main)
   ) as DateObj | undefined;
 
   const [selected, setSelected] = useState<Date>();
@@ -35,13 +35,59 @@ export default function DateField({ path }: { path: string }) {
   const [dayError, setDayError] = useState(false);
   const [dateError, setDateError] = useState(false);
 
-  function changeHandle(val: string, num: number, setFunc: SetFunction) {
+  function changeHandle(
+    val: string,
+    num: number,
+    setFunc: SetFunction,
+    fieldType: "month" | "day" | "year"
+  ) {
     if (val.length > num) return;
     setFunc(val);
+
+    const newValue: DateObj = {
+      month:
+        fieldType === "month"
+          ? val
+            ? Number(val)
+            : null
+          : reduxValue?.month || null,
+      day:
+        fieldType === "day"
+          ? val
+            ? Number(val)
+            : null
+          : reduxValue?.day || null,
+      year:
+        fieldType === "year"
+          ? val
+            ? Number(val)
+            : null
+          : reduxValue?.year || null,
+    };
+
+    dispatch(actions.setData({ path, value: newValue }));
   }
 
-  function addZero(val: string, num: number, setFunc: SetFunction) {
-    if (val.length === 1) setFunc("0" + val);
+  function addZero(
+    val: string,
+    num: number,
+    setFunc: SetFunction,
+    fieldType: "month" | "day" | "year"
+  ) {
+    if (val.length === 1) {
+      const paddedVal = "0" + val;
+      setFunc(paddedVal);
+
+      const newValue: DateObj = {
+        month:
+          fieldType === "month" ? Number(paddedVal) : reduxValue?.month || null,
+        day: fieldType === "day" ? Number(paddedVal) : reduxValue?.day || null,
+        year:
+          fieldType === "year" ? Number(paddedVal) : reduxValue?.year || null,
+      };
+
+      dispatch(actions.setData({ path, value: newValue }));
+    }
   }
 
   function setFromCalendar(date: Date | undefined) {
@@ -62,31 +108,55 @@ export default function DateField({ path }: { path: string }) {
   }
 
   useEffect(() => {
-    if (!reduxValue) return;
-    setMonth(reduxValue.month !== null ? String(reduxValue.month) : "");
-    setDay(reduxValue.day !== null ? String(reduxValue.day) : "");
-    setYear(reduxValue.year !== null ? String(reduxValue.year) : "");
+    if (!reduxValue) {
+      setMonth("");
+      setDay("");
+      setYear("");
+      setSelected(undefined);
+      return;
+    }
+
+    const newMonth = reduxValue.month !== null ? String(reduxValue.month) : "";
+    const newDay = reduxValue.day !== null ? String(reduxValue.day) : "";
+    const newYear = reduxValue.year !== null ? String(reduxValue.year) : "";
+
+    if (month !== newMonth) setMonth(newMonth);
+    if (day !== newDay) setDay(newDay);
+    if (year !== newYear) setYear(newYear);
 
     if (reduxValue.year && reduxValue.month && reduxValue.day) {
-      setSelected(
-        new Date(reduxValue.year, reduxValue.month - 1, reduxValue.day)
+      const newDate = new Date(
+        reduxValue.year,
+        reduxValue.month - 1,
+        reduxValue.day
       );
+      if (!selected || selected.getTime() !== newDate.getTime()) {
+        setSelected(newDate);
+      }
+    } else {
+      setSelected(undefined);
     }
-  }, [reduxValue]);
+  }, [reduxValue, month, day, year, selected]);
 
   useEffect(() => {
     if (!selected) return;
+
     const value: DateObj = {
       month: selected.getMonth() + 1,
       day: selected.getDate(),
       year: selected.getFullYear(),
     };
 
-    setMonth(String(value.month));
-    setDay(String(value.day));
-    setYear(String(value.year));
-    dispatch(actions.setData({ path, value }));
-  }, [selected, dispatch, path]);
+    const currentValue = reduxValue;
+    if (
+      !currentValue ||
+      currentValue.month !== value.month ||
+      currentValue.day !== value.day ||
+      currentValue.year !== value.year
+    ) {
+      dispatch(actions.setData({ path, value }));
+    }
+  }, [selected, dispatch, path, reduxValue]);
 
   return (
     <div className="flex items-end relative">
@@ -95,9 +165,9 @@ export default function DateField({ path }: { path: string }) {
         type="text"
         value={month}
         placeholder="MM"
-        onChange={(e) => changeHandle(e.target.value, 2, setMonth)}
+        onChange={(e) => changeHandle(e.target.value, 2, setMonth, "month")}
         onBlur={(e) => {
-          addZero(e.target.value, 2, setMonth);
+          addZero(e.target.value, 2, setMonth, "month");
           setMonthError(handleError(e.target.value, /^\d{1,2}$/));
         }}
       />
@@ -107,9 +177,9 @@ export default function DateField({ path }: { path: string }) {
         type="text"
         value={day}
         placeholder="DD"
-        onChange={(e) => changeHandle(e.target.value, 2, setDay)}
+        onChange={(e) => changeHandle(e.target.value, 2, setDay, "day")}
         onBlur={(e) => {
-          addZero(e.target.value, 2, setDay);
+          addZero(e.target.value, 2, setDay, "day");
           setDayError(handleError(e.target.value, /^\d{1,2}$/));
         }}
       />
@@ -119,7 +189,7 @@ export default function DateField({ path }: { path: string }) {
         type="text"
         value={year}
         placeholder="YYYY"
-        onChange={(e) => changeHandle(e.target.value, 4, setYear)}
+        onChange={(e) => changeHandle(e.target.value, 4, setYear, "year")}
         onBlur={(e) => {
           setDateError(
             !isValidDate(Number(month), Number(day), Number(e.target.value))
