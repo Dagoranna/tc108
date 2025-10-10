@@ -25,7 +25,6 @@ export default function DateField({ path }: { path: string }) {
     }, state.main)
   ) as DateObj | undefined;
 
-  const [selected, setSelected] = useState<Date>();
   const [open, setOpen] = useState(false);
   const [month, setMonth] = useState<string>("");
   const [day, setDay] = useState<string>("");
@@ -50,19 +49,15 @@ export default function DateField({ path }: { path: string }) {
           ? val
             ? Number(val)
             : null
-          : reduxValue?.month || null,
+          : Number(month) || null,
       day:
-        fieldType === "day"
-          ? val
-            ? Number(val)
-            : null
-          : reduxValue?.day || null,
+        fieldType === "day" ? (val ? Number(val) : null) : Number(day) || null,
       year:
         fieldType === "year"
           ? val
             ? Number(val)
             : null
-          : reduxValue?.year || null,
+          : Number(year) || null,
     };
 
     dispatch(actions.setData({ path, value: newValue }));
@@ -92,8 +87,29 @@ export default function DateField({ path }: { path: string }) {
 
   function setFromCalendar(date: Date | undefined) {
     if (!date) return;
-    setSelected(date);
+
+    const monthFromCalendar = date.getMonth() + 1;
+    setMonth(String(monthFromCalendar));
+    const dayFromCalendar = date.getDate();
+    setDay(String(dayFromCalendar));
+    const yearFromCalendar = date.getFullYear();
+    setYear(String(yearFromCalendar));
     setOpen(false);
+    setMonthError(handleError(String(monthFromCalendar), /^\d{1,2}$/));
+    setDayError(handleError(String(dayFromCalendar), /^\d{1,2}$/));
+    setDateError(
+      !isValidDate(monthFromCalendar, dayFromCalendar, yearFromCalendar)
+    );
+    dispatch(
+      actions.setData({
+        path,
+        value: {
+          month: monthFromCalendar,
+          day: dayFromCalendar,
+          year: yearFromCalendar,
+        },
+      })
+    );
   }
 
   function isValidDate(month: number, day: number, year: number): boolean {
@@ -108,55 +124,23 @@ export default function DateField({ path }: { path: string }) {
   }
 
   useEffect(() => {
-    if (!reduxValue) {
-      setMonth("");
-      setDay("");
-      setYear("");
-      setSelected(undefined);
+    if (
+      reduxValue &&
+      Number(month) === reduxValue.month &&
+      Number(day) === reduxValue.day &&
+      Number(year) === reduxValue.year
+    ) {
       return;
     }
 
-    const newMonth = reduxValue.month !== null ? String(reduxValue.month) : "";
-    const newDay = reduxValue.day !== null ? String(reduxValue.day) : "";
-    const newYear = reduxValue.year !== null ? String(reduxValue.year) : "";
-
-    if (month !== newMonth) setMonth(newMonth);
-    if (day !== newDay) setDay(newDay);
-    if (year !== newYear) setYear(newYear);
-
-    if (reduxValue.year && reduxValue.month && reduxValue.day) {
-      const newDate = new Date(
-        reduxValue.year,
-        reduxValue.month - 1,
-        reduxValue.day
-      );
-      if (!selected || selected.getTime() !== newDate.getTime()) {
-        setSelected(newDate);
-      }
-    } else {
-      setSelected(undefined);
-    }
-  }, [reduxValue, month, day, year, selected]);
-
-  useEffect(() => {
-    if (!selected) return;
-
-    const value: DateObj = {
-      month: selected.getMonth() + 1,
-      day: selected.getDate(),
-      year: selected.getFullYear(),
-    };
-
-    const currentValue = reduxValue;
-    if (
-      !currentValue ||
-      currentValue.month !== value.month ||
-      currentValue.day !== value.day ||
-      currentValue.year !== value.year
-    ) {
-      dispatch(actions.setData({ path, value }));
-    }
-  }, [selected, dispatch, path, reduxValue]);
+    setDay(reduxValue && reduxValue.day !== null ? String(reduxValue.day) : "");
+    setMonth(
+      reduxValue && reduxValue.month !== null ? String(reduxValue.month) : ""
+    );
+    setYear(
+      reduxValue && reduxValue.year !== null ? String(reduxValue.year) : ""
+    );
+  }, [reduxValue]);
 
   return (
     <div className="flex items-end relative">
@@ -199,11 +183,7 @@ export default function DateField({ path }: { path: string }) {
       <button onClick={() => setOpen(!open)}>&#x1F4C5;</button>
       {open && (
         <div className="absolute z-10 bg-white shadow-lg mt-1">
-          <DayPicker
-            mode="single"
-            selected={selected}
-            onSelect={(date) => setFromCalendar(date)}
-          />
+          <DayPicker mode="single" onSelect={(date) => setFromCalendar(date)} />
         </div>
       )}
       {(monthError || dayError || dateError) && (
